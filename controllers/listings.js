@@ -78,7 +78,7 @@ module.exports.listByCategory=async (req, res) => {
     req.flash("error", `No listings found for ${category}.`);
     return res.redirect("/listings");
   }
-  const allListings = await Listing.find({ category: originalCategory });
+  const allListings = await Listing.find({ category:{ $regex: `^${originalCategory}$`, $options: "i" } });
   res.render("listings/index.ejs", { allListings });
 }
 
